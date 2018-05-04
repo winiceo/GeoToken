@@ -1,5 +1,5 @@
-const DevCoin = artifacts.require('./DevCoin.sol')
+const GeoToken = artifacts.require('./GeoToken.sol')
 
 module.exports = (deployer) => {
-  return deployer.deploy(DevCoin)
+  return deployer.deploy(GeoToken)
 }

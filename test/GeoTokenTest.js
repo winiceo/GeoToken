@@ -1,8 +1,8 @@
-const DevCoinAbstraction = artifacts.require('DevCoin')
+const DevCoinAbstraction = artifacts.require('GeoToken')
 const BigNumber = require('bignumber.js')
 const expect = require('chai').expect
 
-contract('DevCoin', function (accounts) {
+contract('GeoToken', function (accounts) {
   let tokenContract
   const creatorAccount = accounts[0]
   const secondAccount = accounts[1]
@@ -22,7 +22,7 @@ contract('DevCoin', function (accounts) {
       let decimalsResult = await tokenContract.decimals.call()
       expect(decimalsResult.toNumber()).to.equal(decimals)
       let symbol = await tokenContract.symbol.call()
-      expect(symbol).to.equal('DEV')
+      expect(symbol).to.equal('GEO')
     })
   })
 

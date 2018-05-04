@@ -1,27 +1,109 @@
 pragma solidity 0.4.18;
 
+/**
+* Abstract contract(interface) for the full ERC 20 Token standard
+* see https://github.com/ethereum/EIPs/issues/20
+* This is a simple fixed supply token contract.
+*/
+contract ERC20 {
 
-import "./ERC20.sol";
-import "./library/SafeMath.sol";
+  /**
+  * Get the total token supply
+  */
+  function totalSupply() public view returns (uint256 supply);
+
+  /**
+  * Get the account balance of an account with address _owner
+  */
+  function balanceOf(address _owner) public view returns (uint256 balance);
+
+  /**
+  * Send _value amount of tokens to address _to
+  * Only the owner can call this function
+  */
+  function transfer(address _to, uint256 _value) public returns (bool success);
+
+  /**
+  * Send _value amount of tokens from address _from to address _to
+  */
+  function transferFrom(address _from, address _to, uint256 _value) public returns (bool success);
+
+  /** Allow _spender to withdraw from your account, multiple times, up to the _value amount.
+  * If this function is called again it overwrites the current allowance with _value.
+  * this function is required for some DEX functionality
+  */
+  function approve(address _spender, uint256 _value) public returns (bool success);
+
+  /**
+  * Returns the amount which _spender is still allowed to withdraw from _owner
+  */
+  function allowance(address _owner, address _spender) public view returns (uint256 remaining);
+
+  /**
+  * Triggered when tokens are transferred from one address to another
+  */
+  event Transfer(address indexed from, address indexed to, uint256 value);
+
+  /**
+  * Triggered whenever approve(address spender, uint256 value) is called.
+  */
+  event Approval(address indexed owner, address indexed spender, uint256 value);
+}
+
+
+
+/**
+ * @title SafeMath
+ * @dev Math operations with safety checks that throw on error
+ */
+library SafeMath {
+  function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+    if (a == 0) {
+      return 0;
+    }
+    uint256 c = a * b;
+    assert(c / a == b);
+    return c;
+  }
+
+  function div(uint256 a, uint256 b) internal pure returns (uint256) {
+    // assert(b > 0); // Solidity automatically throws when dividing by 0
+    uint256 c = a / b;
+    // assert(a == b * c + a % b); // There is no case in which this doesn't hold
+    return c;
+  }
+
+  function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+    assert(b <= a);
+    return a - b;
+  }
+
+  function add(uint256 a, uint256 b) internal pure returns (uint256) {
+    uint256 c = a + b;
+    assert(c >= a);
+    return c;
+  }
+}
+
 
 /**
 Implements ERC 20 Token standard: https://github.com/ethereum/EIPs/issues/20
 
 This is a contract for a fixed supply coin.
 */
-contract DevCoin is ERC20 {
+contract GeoToken is ERC20 {
   using SafeMath for uint256;
 
   // meta data
-  string public constant symbol = "DEV";
+  string public constant symbol = "GEO";
 
   string public version = '1.0';
 
-  string public constant name = "DevCoin";
+  string public constant name = "GeoToken";
 
   uint256 public constant decimals = 18;
 
-  uint256 TOTAL_SUPPLY = 100 * (10 ** 6) * 10 ** decimals; // 100 millions
+  uint256 TOTAL_SUPPLY = 100 * (10 ** 6) * 10 ** uint256(decimals); // 100 millions
 
   // Owner of this contract
   address public owner;
@@ -38,7 +120,7 @@ contract DevCoin is ERC20 {
   * Constructor
   * the creator gets all the tokens initially
   */
-  function DevCoin() public {
+  function GeoToken() public {
     owner = msg.sender;
     balances[owner] = TOTAL_SUPPLY;
   }
