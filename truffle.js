@@ -13,6 +13,12 @@ if (fs.existsSync('secrets.json')) {
 }
 
 module.exports = {
+  solc: {
+    optimizer: {
+      enabled: true,
+      runs: 200
+    }
+  },
   networks: {
     live: {
       network_id: 1, // Ethereum public network

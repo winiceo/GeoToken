@@ -10,7 +10,8 @@
     "compile": "truffle compile",
     "test": "eslint . && truffle test",
     "lint": "solhint contracts/**/*.sol && eslint .",
-    "coverage": "solidity-coverage"
+    "coverage": "solidity-coverage",
+    "merge": "./node_modules/.bin/truffle-flattener contracts/GeoToken.sol >>etherscan_contract.sol"
   },
   "license": "MIT",
   "dependencies": {},
@@ -27,6 +28,7 @@
     "solhint": "^1.1.10",
     "solidity-coverage": "^0.4.10",
     "truffle": "^4.0.3",
+    "truffle-flattener": "^1.2.5",
     "truffle-hdwallet-provider": "^0.0.3"
   }
 }
